@@ -14,9 +14,10 @@ app.use(express.json());
 
 // routers
 const loginRouter = require("./routes/login");
-
+const studentRouter = require("./routes/student");
 
 app.use("/login", loginRouter);
+app.use("/students", studentRouter);
 
 
 
