@@ -4,12 +4,12 @@ const express = require("express");
 const router = express.Router();
 
 // importing controller functions
-const {saveStudent, getAllStudents} = require("../controllers/student");
+const {saveStudent, getAllStudents, getStudentsAsPerFilter} = require("../controllers/student");
 
 // crud operations
 router.route("/").post(saveStudent);
 router.route("/all/:page/:limit").get(getAllStudents);
-router.route("/filter/:page/:limit").get();
+router.route("/filter/:page/:limit").get(getStudentsAsPerFilter);
 
 
 

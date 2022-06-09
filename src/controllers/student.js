@@ -46,4 +46,4 @@ async function getStudentsAsPerFilter(req, res){
     }
 }
 
-module.exports = {saveStudent, getAllStudents};
+module.exports = {saveStudent, getAllStudents, getStudentsAsPerFilter};
