@@ -9,6 +9,7 @@ const {saveStudent, getAllStudents} = require("../controllers/student");
 // crud operations
 router.route("/").post(saveStudent);
 router.route("/all/:page/:limit").get(getAllStudents);
+router.route("/filter/:page/:limit").get();
 
 
 

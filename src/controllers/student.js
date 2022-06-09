@@ -29,4 +29,21 @@ async function getAllStudents(req, res){
     }
 }
 
+async function getStudentsAsPerFilter(req, res){
+    try{
+        const limit = +req.params.limit;
+        const page = +req.params.page;
+        const skip_count = (page-1)*limit;
+
+        // console.log(limit,page);
+
+        const students = await Student.find(req.body).skip(skip_count).limit(limit).lean().exec();
+        // const total_students_count = await Student.countDocuments();
+        res.status(200).json({success : true, data : students});
+    }catch(error){
+        console.log(error);
+        res.status(500).json({success : false, error});
+    }
+}
+
 module.exports = {saveStudent, getAllStudents};
