@@ -9,7 +9,7 @@ const {saveStudent, getAllStudents, getStudentsAsPerFilter} = require("../contro
 // crud operations
 router.route("/").post(saveStudent);
 router.route("/all/:page/:limit").get(getAllStudents);
-router.route("/filter/:page/:limit").get(getStudentsAsPerFilter);
+router.route("/filter/:page/:limit").post(getStudentsAsPerFilter);
 
 
 
