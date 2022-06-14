@@ -52,6 +52,8 @@ async function getStudentsAsPerSearch(req, res){
         const page = +req.params.page;
         const skip_count = (page-1)*limit;
 
+        console.log(req.body);
+
         let students;
         if(req.body.search_for == "")
         {
