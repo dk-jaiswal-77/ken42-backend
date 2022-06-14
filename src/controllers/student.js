@@ -53,7 +53,7 @@ async function getStudentsAsPerSearch(req, res){
         const skip_count = (page-1)*limit;
 
         console.log(req.body);
-
+        
         let students;
         if(req.body.search_for == "")
         {
@@ -61,18 +61,14 @@ async function getStudentsAsPerSearch(req, res){
         }
         else
         {
-            // {
-            //     search_by : "", 
-            //     search_for : ""
-            // }
             if(req.body.search_by == "")
             {
                 // all possbilities // name, roll_number, contact_number
-                students = await Student.find({$or:[{"name" : {$regex:`/${req.body.search_for}/i`}}, {"roll_number" : {$regex:`/${req.body.search_for}/i`}}, {"contact_number" : {$regex:`/${req.body.search_for}/i`}}]}).skip(skip_count).limit(limit).lean().exec();
+                students = await Student.find({$or:[{"name" : {$regex:req.body.search_for, $options:"i"}}, {"roll_number" : {$regex:req.body.search_for, $options:"i"}}, {"contact_number" : {$regex:req.body.search_for, $options:"i"}}]}).skip(skip_count).limit(limit).lean().exec();
             }
             else
             {
-                students = await Student.find({[req.body.search_by] : {$regex:`/${req.body.search_for}/i`}}).skip(skip_count).limit(limit).lean().exec();
+                students = await Student.find({[req.body.search_by] : {$regex:req.body.search_for, $options:"i"}}).skip(skip_count).limit(limit).lean().exec();
             }
         }
 
