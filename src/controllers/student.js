@@ -66,6 +66,7 @@ async function getStudentsAsPerSearch(req, res){
             if(req.body.search_by == "")
             {
                 // all possbilities // name, roll_number, contact_number
+                students = await Student.find({$or:[{"name" : {$regex:`/${req.body.search_for}/i`}}, {"roll_number" : {$regex:`/${req.body.search_for}/i`}}, {"contact_number" : {$regex:`/${req.body.search_for}/i`}}]}).skip(skip_count).limit(limit).lean().exec();
             }
             else
             {
