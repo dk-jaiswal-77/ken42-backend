@@ -46,4 +46,39 @@ async function getStudentsAsPerFilter(req, res){
     }
 }
 
-module.exports = {saveStudent, getAllStudents, getStudentsAsPerFilter};
+async function getStudentsAsPerSearch(req, res){
+    try{
+        const limit = +req.params.limit;
+        const page = +req.params.page;
+        const skip_count = (page-1)*limit;
+
+        let students;
+        if(req.body.search_for == "")
+        {
+            students = await Student.find().skip(skip_count).limit(limit).lean().exec();
+        }
+        else
+        {
+            // {
+            //     search_by : "", 
+            //     search_for : ""
+            // }
+            if(req.body.search_by == "")
+            {
+                // all possbilities // name, roll_number, contact_number
+            }
+            else
+            {
+                students = await Student.find({[req.body.search_by] : {$regex:`/${req.body.search_for}/i`}}).skip(skip_count).limit(limit).lean().exec();
+            }
+        }
+
+        // const total_students_count = await Student.countDocuments();
+        res.status(200).json({success : true, data : students});
+    }catch(error){
+        console.log(error);
+        res.status(500).json({success : false, error});
+    }
+}
+
+module.exports = {saveStudent, getAllStudents, getStudentsAsPerFilter, getStudentsAsPerSearch};
